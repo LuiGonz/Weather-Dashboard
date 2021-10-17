@@ -1,0 +1,154 @@
+header {
+    background-color:rgb(37, 43, 46);
+}
+
+aside {
+    background-image: url("/assets/img/cave.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* margin-left: .5em;
+    margin-top: .5em;
+    margin-right: .5em;
+    margin-bottom: .5em; */
+}
+
+/* .col-lg-9 {
+    margin-left: -.12.5em;
+    padding-left: 1px;
+    padding-right: 1px;
+} */
+
+h5 {
+    width: max-content;
+    border-radius: .25em;
+}
+
+button.list-group-item {
+    margin-bottom: 1em;
+    border-radius: .25em;
+    opacity: .6;
+    color: rgb(255, 174, 0);
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+#current {
+    border-radius: 5px;
+    font-size: 20px;
+    text-align: center;
+    background-color: darkcyan;
+    width: 100%;
+}
+
+.forecast-title {
+    margin-top: .5em;
+}
+
+#five-day-cards {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card-body {
+    background-color: rgb(50, 71, 82);
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.low-index {
+    background-color: rgb(1, 160, 1);
+    color:white;
+    border-radius: 5px;
+    width: 115px;
+    padding:2px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.moderate-index {
+    background-color: rgb(255, 255, 0);
+    border-radius: 5px;
+    width: 100px;
+    padding:2px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.high-index {
+    background-color: rgb(241, 157, 0);
+    color:white;
+    border-radius: 5px;
+    width: 100px;
+    padding:2px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.very-high-index {
+    color:white;
+    background-color: rgb(233, 0, 0);
+    border-radius: 5px;
+    width: 100px;
+    padding:2px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.extreme-index {
+    background-color: rgb(122, 0, 122);
+    color:white;
+    border-radius: 5px;
+    width: 100px;
+    padding:2px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* @media screen and (max-width: 1185px) { */
+@media screen and (max-width: 992px) {
+	aside {
+        background-image: url("/assets/img/Zugpsitze_mountain.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+}
+
+@media screen and (max-width: 578px) {
+    div.form-inline {
+    width: 169px;
+    }
+
+    button.btn {
+        margin-top: .5em;
+    }
+}
+
+@media screen and (max-width: 471px) {
+    .card-body {
+        width: 175%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media screen and (max-width: 401px) {
+    .card-body {
+        width: 165%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media screen and (max-width: 471px) {
+    .card-title {
+        margin-left: 3.3em;
+    }
+}
+
+@media screen and (max-width: 401px) {
+    #five-day-cards {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
