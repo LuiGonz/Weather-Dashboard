@@ -29,3 +29,12 @@ THEN I am presented with a 5-day forecast that displays the date, an icon repres
 WHEN I click on a city in the search history
 THEN I am again presented with current and future conditions for that city
 ```
+## Screenshots
+
+![screencapture-127-0-0-1-5500-index-html-2021-10-17-00_44_31](https://user-images.githubusercontent.com/89287787/137612260-ba02a5a3-bc92-4901-a5e5-1e8f490bb067.png)
+
+
+![screencapture-127-0-0-1-5500-index-html-2021-10-17-00_45_09](https://user-images.githubusercontent.com/89287787/137612267-cb9a3042-6232-4369-9ec0-da6c72598a87.png)
+
+
+![screencapture-127-0-0-1-5500-index-html-2021-10-17-00_46_18](https://user-images.githubusercontent.com/89287787/137612271-dc6886cc-ff03-4f28-bfab-c85f5225a354.png)
