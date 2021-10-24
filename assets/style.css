@@ -6,17 +6,7 @@ aside {
     background-image: url("/assets/img/cave.jpg");
     background-repeat: no-repeat;
     background-size: cover;
-    /* margin-left: .5em;
-    margin-top: .5em;
-    margin-right: .5em;
-    margin-bottom: .5em; */
 }
-
-/* .col-lg-9 {
-    margin-left: -.12.5em;
-    padding-left: 1px;
-    padding-right: 1px;
-} */
 
 h5 {
     width: max-content;
