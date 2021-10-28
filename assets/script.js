@@ -1,116 +1,108 @@
-//current weather for main weather card; one call for future forecast cards
-var today = moment().format("MMMM Do, YYYY");
-var searchHistory = JSON.parse(localStorage.getItem("search-history")) || [];
+let currentDay = moment().format("MMMM Do YYYY, h:mm a");
+let historySrch = JSON.parse(localStorage.getItem("history-search")) || [];
 
-//call function to pull past searches from localstorage and display them along left side of page
-init();
-
-$("#search-btn").on("click", function(){
-    var searchInput = $("#search-value").val();
-    $("#search-value").val("")
-    //place search weather function w searchInput as argument
-    weatherSearch(searchInput);
-    saveSearch(searchInput);
+document.querySelector("#search-button").addEventListener("click", function(){
+    let inputSrch = document.querySelector("#input-search").value;
+    weatherSearch(inputSrch);
+    saveSearch(inputSrch);
 })
 
-//adds listener to entire div and if a button from a past search is clicked, the text within becomes the new search input
-$("#history-list").on("click", function(event){
-    // element = event.target
-    newInput = $(event.target).text()
-    weatherSearch(newInput)
-    
+document.querySelector("#search-history-list").addEventListener("click", (event) => {
+    let newSrchInput = jQuery(event.target).text();
+    weatherSearch(newSrchInput);
 })
-//function to pull the data from the weather API and create elements to display the information 
+
 function weatherSearch(input) {
-    $("#current").empty();
-    var APIurl = "https://api.openweathermap.org/data/2.5/weather?q="+input+"&appid=adf080c4900ab48938f6770e1ae7a9c0&units=imperial"
-    fetch(APIurl)
-    .then(response => {return response.json()})
-    .then(data => {
-        var cityname,temp,wind,humidity,icon;
-        cityname = $("<h2>").addClass("city-name").attr("style","color: gold;").text(data.name+"  -  "+today);
-        var iconLink = "http://openweathermap.org/img/wn/"+data.weather[0].icon+"@2x.png";
-        icon = $('<img>').attr('src',iconLink).attr("style","width:100px;height:100px;")
-        temp = $("<p>").text("Temp: "+data.main.temp+"℉");
-        wind = $("<p>").text("Wind: "+data.wind.speed+"MPH");
-        humidity = $("<p>").text("Humidity: "+data.main.humidity+"%");
-
-        $("#current").append(cityname,icon,temp,wind,humidity);    
-        
-        var lat = data.coord.lat;
-        var lon = data.coord.lon;
-
-        forecastSearch(lat,lon);
+    jQuery("#todays-weather").empty();
+    let linkAPI = "https://api.openweathermap.org/data/2.5/weather?q="+input+"&appid=bbf0710aea063cb777e765eed63b4ebb&units=imperial";
+    fetch(linkAPI).then(response => {return response.json()}).then(data => {
+        let cityName,temp,wind,humidity,icon;
+        cityName = jQuery("<h2>").addClass("city-name").attr("style","color: gold;").text(data.name + " - " + currentDay);
+        let iconLink = "http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png";
+        icon = jQuery('<img>').attr('src',iconLink).attr("style","width: 100px; height: 100px;")
+        temp = jQuery("<p>").text("Temp: " + data.main.temp + "℉");
+        wind = jQuery("<p>").text("Wind: " + data.wind.speed + "MPH");
+        humidity = jQuery("<p>").text("Humidity: " + data.main.humidity + "%");
+        jQuery("#todays-weather").append(cityName,icon,temp,wind,humidity);    
+        let lat = data.coord.lat;
+        let lon = data.coord.lon;
+        weatherLatLon(lat,lon);
     })
 }
 
-//pulling the data from the weather API to display the 5 day forcast. Includes an if statement to color code the UV index and a for loop to create the elements for each of the 5 days and append to the page. 
-function forecastSearch(lat,lon) {
-    $("#five-day-cards").empty();
-    $('#header-five-days').empty();
-    var APIurl = "https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&appid=adf080c4900ab48938f6770e1ae7a9c0&units=imperial"
-    fetch(APIurl)
-    .then(response => {return response.json()})
-    .then(data => {
-        var uvIndex = data.current.uvi;
-        var uvIndexEl = $("<p>").text("UV Index: " + uvIndex);
-        if (uvIndex < 3) {
-            uvIndexEl.addClass("low-index")
-        } else if (uvIndex > 2 && uvIndex < 6) {
-            uvIndexEl.addClass("moderate-index")
-        } else if (uvIndex > 5 && uvIndex < 8) {
-            uvIndexEl.addClass("high-index")
-        } else if (uvIndex > 7 && uvIndex < 11) {
-            uvIndexEl.addClass("very-high-index")
-        } else {uvIndexEl.addClass("extreme-index")}
+function weatherLatLon(lat,lon) {
+    jQuery("#cards-five-days").empty();
+    jQuery('#title-five-days').empty();
+    let linkAPI = "https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&appid=bbf0710aea063cb777e765eed63b4ebb&units=imperial"
+    fetch(linkAPI).then(response => {return response.json()}).then(data => {
+        let indexUV = data.current.uvi;
+        let elemIndexUV = jQuery("<p>").text("UV Index: " + indexUV);
+        switch (true) {
+            case (indexUV < 3):
+                elemIndexUV.addClass("low");
+            break;
+            case (indexUV > 2 && indexUV < 6):
+                elemIndexUV.addClass("moderate");
+            break;
+            case (indexUV > 5 && indexUV < 8): 
+                elemIndexUV.addClass("high");
+            break;
+            case (indexUV > 7 && indexUV < 11):
+                elemIndexUV.addClass("very-high");
+            break;
+            default: 
+                elemIndexUV.addClass("extreme");
+            break;
+        }
 
-        $("#current").append(uvIndexEl).attr("style","border: 1px solid black");
+        jQuery("#todays-weather").append(elemIndexUV).attr("style","border: 2px solid aqua");
 
-        
-        var divHeader = $("<h3>").addClass("forecast-title").text("5 Day Forecast:")
-        $("#header-five-days").append(divHeader);
-
+        let divHeader = $("<h3>").addClass("forecast-title").text("5 Day Forecast:")
+        jQuery("#title-five-days").append(divHeader);
         for (let i = 1; i < (data.daily.length-2); i++) {
-            var temp = $("<p>").addClass("card-text").text("Temp: "+data.daily[i].temp.day+"℉");
-            var wind = $("<p>").addClass("card-text").text("Wind: "+data.daily[i].wind_speed+"MPH");
-            var humidity = $("<p>").addClass("card-text").text("Humidity: "+data.daily[i].humidity+"%");
-            var iconLink = "http://openweathermap.org/img/wn/"+data.daily[i].weather[0].icon+"@2x.png";
-            var icon = $('<img>').attr('src',iconLink).attr("style","width:80px;height:80px;")
-            
-
-            var cardBody = $("<div>").addClass("card-body");
-            var cardDiv = $("<div>").addClass("card m-2").attr("style","width:11rem;");
-            var date = moment().add(i,"days").format("MMM Do, YYYY");
-            var cardDate = $("<h5>").addClass("card-title").text(date);
-
-            $(cardBody).append(cardDate,icon,temp,wind,humidity);
-            $(cardDiv).append(cardBody);
-            $("#five-day-cards").append(cardDiv);
+            let temp = jQuery("<p>").addClass("card-text").text("Temp: " + data.daily[i].temp.day + "℉");
+            let wind = jQuery("<p>").addClass("card-text").text("Wind: " + data.daily[i].wind_speed + "MPH");
+            let humidity = jQuery("<p>").addClass("card-text").text("Humidity: " + data.daily[i].humidity + "%");
+            let iconLink = "http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + "@2x.png";
+            let icon = jQuery('<img>').attr('src',iconLink).attr("style","width: 80px; height: 80px;")
+            let cardBody = jQuery("<div>").addClass("card-body");
+            let cardDiv = jQuery("<div>").addClass("card mb-1.5").attr("style","width: 12em;");
+            let date = moment().add(i,"days").format("MMM Do, YYYY");
+            let cardDate = jQuery("<h5>").addClass("card-title").text(date);
+            jQuery(cardBody).append(cardDate,icon,temp,wind,humidity);
+            jQuery(cardDiv).append(cardBody);
+            jQuery("#cards-five-days").append(cardDiv);
         }
     })
 }
 
-
-//function to save the past searches as buttons on the left side and save them in local storage so they can be displayed on page refresh. if statement to make sure there are no repeat searches listed 
-function saveSearch(searchInput) {
-   if (!searchHistory.includes(searchInput)) {
-    var searchButton = $("<button>").addClass("list-group-item list-group-item-action").attr("style","width:13.3rem").text(searchInput);
-     $("#history-list").append(searchButton);
-    searchHistory.push(searchInput);
-   } else {return}
-    localStorage.setItem("search-history",JSON.stringify(searchHistory));
-}
-
-//on page load, pull history from local storage and create buttons
-function init() {
-    var savedHistory = JSON.parse(localStorage.getItem("search-history")) || [];
-    if (savedHistory === null) {
-        return;
-    } else {
-        for (let i = 0; i < savedHistory.length; i++) {
-            var searchButton = $("<button>").addClass("list-group-item list-group-item-action historyBtn p-2").attr("style","width:13.3rem").text(savedHistory[i]);
-            $("#history-list").append(searchButton);
-        }
+function saveSearch(inputSrch) {
+    switch (true) {
+        case (!historySrch.includes(inputSrch)):
+                let searchButton = jQuery("<button>")
+                    .addClass("list-group-item list-group-item-action")
+                    .attr("style","width:13.3rem").text(inputSrch);
+                jQuery("#search-history-list").append(searchButton);
+                historySrch.push(inputSrch);
+	    break;
+        default:
+            return;
     }
+    localStorage.setItem("history-search",JSON.stringify(historySrch));
 }
 
+function init() {
+    let savedHistory = JSON.parse(localStorage.getItem("history-search")) || [];
+    switch (savedHistory) {
+        case null:
+            return;
+        default:
+            for (let i = 0; i < savedHistory.length; i++) {
+                let searchButton = $("<button>")
+                    .addClass("list-group-item list-group-item-action historyBtn p-2")
+                    .attr("style","width:13.3rem").text(savedHistory[i]);
+                jQuery("#search-history-list").append(searchButton);
+            }
+        break;
+    }
+} init();
