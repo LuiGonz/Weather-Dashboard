@@ -31,10 +31,8 @@ THEN I am again presented with current and future conditions for that city
 ```
 ## Screenshots
 
-![screencapture-127-0-0-1-5500-index-html-2021-10-17-00_44_31](https://user-images.githubusercontent.com/89287787/137612260-ba02a5a3-bc92-4901-a5e5-1e8f490bb067.png)
+![weather-pic1](https://user-images.githubusercontent.com/89287787/139194866-e1fab4f0-830a-4977-9348-9ebe9bddb944.png)
 
 
-![screencapture-127-0-0-1-5500-index-html-2021-10-17-00_45_09](https://user-images.githubusercontent.com/89287787/137612267-cb9a3042-6232-4369-9ec0-da6c72598a87.png)
+![weather-pic2](https://user-images.githubusercontent.com/89287787/139194890-c4fb9b2e-2ad8-449f-94ec-6d5b55f33821.png)
 
-
-![screencapture-127-0-0-1-5500-index-html-2021-10-17-00_46_18](https://user-images.githubusercontent.com/89287787/137612271-dc6886cc-ff03-4f28-bfab-c85f5225a354.png)
